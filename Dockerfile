@@ -12,15 +12,6 @@ RUN /tmp/build.sh
 
 VOLUME /maps
 
-ENV MS_MAPFILE "/maps/mapfile.map"
-ENV DOC_ROOT "/"
-ENV PORT 5000
-ENV DEBUG 0                     # 0 or 1
-ENV MIN_PROCS 1
-ENV MAX_PROCS 3
-ENV MAX_LOAD_PER_PROC 4
-ENV IDLE_TIMEOUT 20
+EXPOSE 9005
 
-EXPOSE $PORT
-
-CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
+CMD /usr/bin/spawn-fcgi -n -a 0.0.0.0 -p 9005 -- /usr/bin/multiwatch -f 1 -- /usr/local/bin/mapserv

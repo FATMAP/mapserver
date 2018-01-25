@@ -9,6 +9,14 @@ services:
     hostname: mapserver
     volumes:
       - ./:/maps
-    ports:
-      - "5000:5000"
     working_dir: /maps
+
+  webserver:
+    image: m4rcu5/lighttpd
+    ports:
+      - "8080:80"
+    depends_on:
+      - mapserver
+    volumes:
+      - ./:/etc/lighttpd
+    command: ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]

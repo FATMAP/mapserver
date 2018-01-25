@@ -9,13 +9,11 @@ set -e
 # Everything happens under here.
 cd /tmp
 
-# Install the web server configuration.
-cp ./lighttpd.conf /lighttpd.conf
-
 # Install the Mapserver dependencies.
 apt-get update -y
 apt-get install -y \
-        lighttpd \
+        spawn-fcgi \
+        multiwatch \
         libfcgi-dev \
         libfreetype6-dev \
         libfribidi-dev \
