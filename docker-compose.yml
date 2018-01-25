@@ -1,0 +1,14 @@
+##
+# Run Mapserver in a development environment.
+#
+
+version: '3'
+services:
+  mapserver:
+    build: .
+    hostname: mapserver
+    volumes:
+      - ./:/maps
+    ports:
+      - "5000:5000"
+    working_dir: /maps

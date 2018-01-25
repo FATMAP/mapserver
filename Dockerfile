@@ -1,14 +1,21 @@
-FROM python:2.7.12
+##
+# Create the fatmap/mapserver Docker image.
+#
 
-RUN apt-get update && apt-get -y install mapserver-bin lighttpd && apt-get clean && rm -rf /var/lib/apt/lists/*
+FROM fatmap/gdal:2.3-dev
 
-COPY lighttpd.conf /lighttpd.conf
+MAINTAINER FATMAP Platform Team <platform@fatmap.com>
 
-VOLUME /map
+# Build the image.
+COPY . /tmp/
+RUN /tmp/build.sh
 
+VOLUME /maps
+
+ENV MS_MAPFILE "/maps/mapfile.map"
 ENV DOC_ROOT "/"
 ENV PORT 5000
-ENV DEBUG 0
+ENV DEBUG 0                     # 0 or 1
 ENV MIN_PROCS 1
 ENV MAX_PROCS 3
 ENV MAX_LOAD_PER_PROC 4
